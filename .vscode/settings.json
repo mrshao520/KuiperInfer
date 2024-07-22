@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "armadillo": "cpp",
+        "cctype": "cpp",
+        "utility": "cpp"
+    },
+    "testMate.cpp.test.advancedExecutables": [
+        {
+            "pattern": "{build,Build,BUILD,out,Out,OUT}/**/*{test,Test,TEST}*",
+            "cwd": "${workspaceFolder}"
+        }
+    ],
+}
