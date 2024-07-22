@@ -21,7 +21,7 @@
 
 // Created by fss on 23-1-23.
 #include <gtest/gtest.h>
-#include "layer/abstract/param_layer.hpp"
+#include "kuiper/layer/abstract/param_layer.hpp"
 
 TEST(test_param_layer, set_weight1) {
   using namespace kuiper_infer;

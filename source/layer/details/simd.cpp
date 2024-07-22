@@ -22,10 +22,10 @@
 //
 // Created by fss on 23-7-26.
 //
-#include "simd.hpp"
+#include "kuiper/layer/details/simd.hpp"
 #include <glog/logging.h>
 #include <armadillo>
-#include "utils/math/fmath.hpp"
+#include "kuiper/utils/math/fmath.hpp"
 
 namespace kuiper_infer {
 

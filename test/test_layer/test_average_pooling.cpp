@@ -22,8 +22,8 @@
 // Created by fss on 23-1-3.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/adaptive_avgpooling.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/adaptive_avgpooling.hpp"
+#include "kuiper/data/tensor.hpp"
 
 void AveragePooling(const std::vector<std::shared_ptr<kuiper_infer::Tensor<float>>>& inputs,
                     std::vector<std::shared_ptr<kuiper_infer::Tensor<float>>>& outputs,

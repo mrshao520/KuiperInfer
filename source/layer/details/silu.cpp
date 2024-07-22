@@ -21,11 +21,11 @@
 
 // Created by fss on 22-12-25.
 
-#include "silu.hpp"
-#include "activation.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "simd.hpp"
-#include "tick.hpp"
+#include "kuiper/layer/details/silu.hpp"
+#include "kuiper/layer/details/activation.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/simd.hpp"
+#include "kuiper/tick.hpp"
 
 namespace kuiper_infer {
 using namespace activation;

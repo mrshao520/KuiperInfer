@@ -22,7 +22,7 @@
 // Created by yizhu on 2023/2/5.
 
 #include <gtest/gtest.h>
-#include "runtime/runtime_parameter.hpp"
+#include "kuiper/runtime/runtime_parameter.hpp"
 
 TEST(test_runtime, runtime_param1) {
   using namespace kuiper_infer;

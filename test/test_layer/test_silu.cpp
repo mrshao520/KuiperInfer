@@ -23,8 +23,8 @@
 
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/silu.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/silu.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_layer, forward_silu1) {
   using namespace kuiper_infer;

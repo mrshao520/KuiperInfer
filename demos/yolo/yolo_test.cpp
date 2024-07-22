@@ -25,9 +25,9 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include "../image_util.hpp"
-#include "data/tensor.hpp"
-#include "runtime/runtime_ir.hpp"
-#include "tick.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
+#include "kuiper/tick.hpp"
 
 kuiper_infer::sftensor PreProcessImage(const cv::Mat& image, const int32_t input_h,
                                        const int32_t input_w) {

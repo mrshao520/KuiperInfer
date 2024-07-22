@@ -22,9 +22,9 @@
 // Created by fss on 23-2-6.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
-#include "tick.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
+#include "kuiper/tick.hpp"
 
 TEST(test_layer, deconv_nogroup) {
   using namespace kuiper_infer;

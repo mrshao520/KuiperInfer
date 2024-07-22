@@ -21,8 +21,8 @@
 
 // Created by fss on 23-1-29.
 #include <gtest/gtest.h>
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_runtime, runtime_graph_input_init1) {
   using namespace kuiper_infer;

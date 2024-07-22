@@ -21,12 +21,12 @@
 
 // Created by fss on 22-11-13.
 
-#include "softmax.hpp"
+#include "kuiper/layer/details/softmax.hpp"
 #include <glog/logging.h>
 #include <numeric>
-#include "data/tensor_util.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "utils/math/fmath.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/utils/math/fmath.hpp"
 namespace kuiper_infer {
 
 SoftmaxLayer::SoftmaxLayer(int32_t dim) : NonParamLayer("Softmax"), softmax_dim_(dim) {}

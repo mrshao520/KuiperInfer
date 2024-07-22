@@ -20,8 +20,9 @@
 // SOFTWARE.
 
 // Created by fss on 22-12-25.
-#include "cat.hpp"
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/cat.hpp"
+
 namespace kuiper_infer {
 CatLayer::CatLayer(int32_t dim) : NonParamLayer("cat"), dim_(dim) {}
 

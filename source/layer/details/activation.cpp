@@ -1,8 +1,8 @@
 //
 // Created by fss on 23-12-14.
 //
-#include "activation.hpp"
-#include "simd.hpp"
+#include "kuiper/layer/details/activation.hpp"
+#include "kuiper/layer/details/simd.hpp"
 namespace kuiper_infer {
 namespace activation {
 std::string ActivationTypeToString(ActivationType type) {

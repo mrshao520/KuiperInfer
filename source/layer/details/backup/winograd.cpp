@@ -20,9 +20,10 @@
 // SOFTWARE.
 
 // Created by fushenshen on 2023/3/15.
-#include "winograd.hpp"
+#include "kuiper/layer/details/backup/winograd.hpp"
+#include "kuiper/tick.hpp"
 #include <glog/logging.h>
-#include "tick.hpp"
+
 namespace kuiper_infer {
 
 static void WinogradTransformG(const arma::fmat& g, arma::fmat& transform_g) {

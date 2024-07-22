@@ -13,5 +13,6 @@ endif ()
 
 add_executable(yolo_test yolo_test.cpp ../image_util.hpp ../image_util.cpp)
 target_link_directories(yolo_test PUBLIC ${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(yolo_test ${OpenCV_LIBS} kuiper)
+target_link_libraries(yolo_test ${OpenCV_LIBS} ${KuiperInfer_LINK})
 
+kuiper_infer_set_runtime_directory(yolo_test "${PROJECT_BINARY_DIR}/demos")

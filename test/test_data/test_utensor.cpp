@@ -23,8 +23,8 @@
 
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "data/tensor.hpp"
-#include "data/tensor_util.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/data/tensor_util.hpp"
 
 TEST(test_utensor, tensor_init1) {
   using namespace kuiper_infer;

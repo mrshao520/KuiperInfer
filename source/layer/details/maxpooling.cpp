@@ -21,10 +21,10 @@
 
 // Created by fss on 22-11-18.
 
-#include "maxpooling.hpp"
-#include "data/tensor_util.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/maxpooling.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 namespace kuiper_infer {
 
 MaxPoolingLayer::MaxPoolingLayer(uint32_t padding_h, uint32_t padding_w, uint32_t pooling_size_h,

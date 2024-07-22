@@ -1,8 +1,41 @@
+# -----| cmake version
 cmake_minimum_required(VERSION 3.16)
-project(kuiper_infer)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# -----| kuiper_infer project
+project(kuiper_infer LANGUAGES C CXX)
+
+# -----| cpp version
 set(CMAKE_CXX_STANDARD 17)
-include_directories(./include)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# -----| kuiper_infer version
+set(KUIPERINFER_TARGET_VERSION "0.1.1" CACHE STRING "KuiperInfer logical version" FORCE)
+set(KUIPERINFER_TARGET_SOVERSION "0.1.1" CACHE STRING "KuiperInfer soname version" FORCE)
+
+# -----| using cmake scripts and modules
+list(APPEND  CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
+include(GNUInstallDirs)
+include(cmake/utils/Utils.cmake)
+include(cmake/utils/Misc.cmake)
+include(cmake/utils/Summary.cmake)
+include(cmake/utils/ConfigGen.cmake)
+
+# -----| options 
+kuiper_infer_option(CPU_ONLY "Build kuiper_infer without CUDA support" ON)
+kuiper_infer_option(USE_CUDNN "Build kuiper_infer with cuDNN library support" ON IF NOT CPU_ONLY)
+kuiper_infer_option(BUILD_DEMO "Build the demo project" ON)
+kuiper_infer_option(BUILD_BENCH "Build the bench project" ON)
+kuiper_infer_option(BUILD_TEST "Build the test project" ON)
+
+# -----| dependencies
+include(cmake/utils/Dependencies.cmake)
+
+# -----| flags
+if(UNIX OR APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall")
+endif()
+
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if (MSVC)
@@ -23,56 +56,46 @@ if (MSVC)
     # Force LLVM OpenMP on MSVC
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /openmp:llvm /openmp:experimental /arch:AVX2")
 endif ()
-option(BUILD_DEMO "BUILD THE DEMO PROJECT")
-
-if (BUILD_DEMO)
-    MESSAGE(STATUS "BUILD DEMO PROJECT")
-    add_subdirectory(demos)
-endif ()
-
-find_package(benchmark REQUIRED)
-find_package(OpenMP REQUIRED)
-find_package(Armadillo REQUIRED)
-find_package(glog REQUIRED)
-find_package(BLAS REQUIRED)
-find_package(LAPACK REQUIRED)
-
-aux_source_directory(./source/data DIR_DATA)
-aux_source_directory(./source/runtime DIR_RUNTIME)
-aux_source_directory(./source/runtime/pnnx DIR_RUNTIME)
-
-aux_source_directory(./source/layer/abstract DIR_ABSTRACT_LAYER)
-aux_source_directory(./source/layer/details DIR_BINOCULAR_LAYER)
-aux_source_directory(./source/parser DIR_PARSER)
-aux_source_directory(./source/utils/time DIR_UTILS)
-aux_source_directory(./source/utils/math DIR_MATH)
-
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
-set(link_lib glog::glog)
-IF (!WIN32)
-    set(link_lib ${link_lib} pthread)
-ENDIF ()
 
-set(link_math_lib ${ARMADILLO_LIBRARIES} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+set_kuiper_infer_link()
 
-add_library(kuiper SHARED ${DIR_DATA} ${DIR_PARSER} ${DIR_MATH} ${DIR_UTILS} ${DIR_RUNTIME} ${DIR_ABSTRACT_LAYER} ${DIR_BINOCULAR_LAYER} ${DIR_PARSER} )
-target_link_libraries(kuiper ${link_lib} ${link_math_lib} OpenMP::OpenMP_CXX)
+# -----| warning
+kuiper_infer_warnings_disable(CMAKE_CXX_FLAGS -Wno-uninitialized -Wno-reorder)
 
-target_include_directories(kuiper PUBLIC ${benchmark_INCLUDE_DIRS})
-target_include_directories(kuiper PUBLIC ${glog_INCLUDE_DIR})
-target_include_directories(kuiper PUBLIC ${GTest_INCLUDE_DIR})
-target_include_directories(kuiper PUBLIC ${Armadillo_INCLUDE_DIR})
-
-# mathfun library defines
+# -----| definitions
+add_definitions(-DKUIPERINFER_VERSION=${KUIPERINFER_TARGET_VERSION})
 add_compile_definitions(SSE_MATHFUN_WITH_CODE USE_SSE_AUTO)
-# 本项目的开发者请使用set(DEVELOPMENT ON)或者在cmake中添加-DDEVELOPMENT=ON将选项打开
-option(DEVELOPMENT ON)
-if (${DEVELOPMENT})
-    message(STATUS "DEVELOPMENT MODE ON")
-    enable_testing()
-    add_subdirectory(bench)
-    add_subdirectory(test)
-endif ()
 
+# -----| includes
+set(KuiperInfer_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(KuiperInfer_SRC_DIR ${PROJECT_SOURCE_DIR}/source)
+include_directories(${PROJECT_BINARY_DIR})
+
+# -----| enable testing
+if (BUILD_TEST)
+    enable_testing()
+endif()
+
+# -----| subdirectories
+add_subdirectory(source)
+add_subdirectory(demos)
+add_subdirectory(bench)
+add_subdirectory(test)
+
+# -----| uninstall target
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils/Uninstall.cmake.in 
+    ${CMAKE_CURRENT_BINARY_DIR}/cmake/Uninstall.cmake 
+    IMMEDIATE @ONLY)
+
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P 
+    ${CMAKE_CURRENT_BINARY_DIR}/cmake/Uninstall.cmake)
+
+# -----| configuration summary
+kuiper_infer_print_configuration_summary()
+
+# -----| export configs generation
+kuiper_infer_generate_export_configs()

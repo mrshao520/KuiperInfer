@@ -22,9 +22,9 @@
 // Created by fss on 22-12-25.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/upsample.hpp"
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/upsample.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, forward_upsample1) {
   using namespace kuiper_infer;

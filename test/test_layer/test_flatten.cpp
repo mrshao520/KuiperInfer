@@ -22,8 +22,8 @@
 // Created by fss on 22-11-24.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/flatten.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/flatten.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_layer, forward_flatten_layer1) {
   using namespace kuiper_infer;

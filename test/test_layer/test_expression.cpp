@@ -21,10 +21,10 @@
 
 // Created by fss on 22-12-1.
 #include <gtest/gtest.h>
-#include "../../source/layer/details/expression.hpp"
-#include "data/load_data.hpp"
-#include "parser/parse_expression.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/expression.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/parser/parse_expression.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, add1) {
   using namespace kuiper_infer;

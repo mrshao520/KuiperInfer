@@ -21,10 +21,10 @@
 
 // Created by fss on 22-11-13.
 
-#include "convolution.hpp"
+#include "kuiper/layer/details/convolution.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/utils/math/fmath.hpp"
 #include <glog/logging.h>
-#include "layer/abstract/layer_factory.hpp"
-#include "utils/math/fmath.hpp"
 
 namespace kuiper_infer {
 

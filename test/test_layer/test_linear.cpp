@@ -22,9 +22,9 @@
 // Created by fss on 22-12-23.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/linear.hpp"
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/linear.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, forward_linear1) {
   using namespace kuiper_infer;

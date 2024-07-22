@@ -22,12 +22,12 @@
 // Created by fss on 23-2-6.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/convolution.hpp"
-#include "data/load_data.hpp"
-#include "data/tensor.hpp"
-#include "data/tensor_util.hpp"
-#include "runtime/runtime_ir.hpp"
-#include "tick.hpp"
+#include "kuiper/layer/details/convolution.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
+#include "kuiper/tick.hpp"
 
 using namespace kuiper_infer;
 

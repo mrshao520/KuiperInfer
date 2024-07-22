@@ -22,9 +22,9 @@
 // Created by fss on 22-11-30.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/batchnorm2d.hpp"
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/batchnorm2d.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, forward_batchnorm1) {
   using namespace kuiper_infer;

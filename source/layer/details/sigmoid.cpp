@@ -21,10 +21,10 @@
 
 // Created by fss on 22-11-13.
 
-#include "sigmoid.hpp"
+#include "kuiper/layer/details/sigmoid.hpp"
 #include <glog/logging.h>
-#include "layer/abstract/layer_factory.hpp"
-#include "simd.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/simd.hpp"
 
 namespace kuiper_infer {
 using namespace activation;

@@ -22,8 +22,8 @@
 // Created by fss on 23-1-2.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/hardsigmoid.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/hardsigmoid.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_layer, forward_hardsigmoid1) {
   using namespace kuiper_infer;

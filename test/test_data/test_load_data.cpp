@@ -22,8 +22,8 @@
 // Created by fss on 22-11-21.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "data/load_data.hpp"
-#include "tick.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/tick.hpp"
 
 TEST(test_load, load_csv_data) {
   using namespace kuiper_infer;

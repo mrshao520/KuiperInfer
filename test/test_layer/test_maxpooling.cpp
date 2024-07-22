@@ -22,8 +22,8 @@
 // Created by fss on 22-11-24.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/maxpooling.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/maxpooling.hpp"
+#include "kuiper/data/tensor.hpp"
 
 void MaxPooling(const std::vector<std::shared_ptr<kuiper_infer::Tensor<float>>>& inputs,
                 std::vector<std::shared_ptr<kuiper_infer::Tensor<float>>>& outputs, int stride_w,

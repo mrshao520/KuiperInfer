@@ -22,8 +22,8 @@
 // Created by fss on 22-12-26.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/cat.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/cat.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_layer, cat1) {
   using namespace kuiper_infer;

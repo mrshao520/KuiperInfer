@@ -4,7 +4,7 @@
 #include <glog/logging.h>
 #include <gtest/gtest.h>
 #include <iostream>
-#include "../../source/layer/details/matmul.hpp"
+#include "kuiper/layer/details/matmul.hpp"
 
 TEST(test_layer, forward_matmul) {
   using namespace kuiper_infer;

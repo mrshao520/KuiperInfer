@@ -22,8 +22,8 @@
 // Created by fss on 22-11-22.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_net, forward_resnet18) {
   using namespace kuiper_infer;

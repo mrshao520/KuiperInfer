@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 // Created by fss on 22-11-12.
-#include "adaptive_avgpooling.hpp"
+#include "kuiper/layer/details/adaptive_avgpooling.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 #include <glog/logging.h>
-#include "layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 

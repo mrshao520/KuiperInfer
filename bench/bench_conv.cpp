@@ -22,10 +22,10 @@
 // Created by fushenshen on 2023/3/15.
 
 #include <benchmark/benchmark.h>
-#include "../source/layer/details/backup/winograd.hpp"
-#include "../source/layer/details/convolution.hpp"
-#include "../source/layer/details/deconvolution.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/backup/winograd.hpp"
+#include "kuiper/layer/details/convolution.hpp"
+#include "kuiper/layer/details/deconvolution.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 static void BM_Convolution(benchmark::State& state) {
   using namespace kuiper_infer;

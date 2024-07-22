@@ -21,7 +21,7 @@
 
 // Created by fss on 2023/3/20.
 #include <glog/logging.h>
-#include "data/tensor.hpp"
-#include "data/tensor_util.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/data/tensor_util.hpp"
 
 namespace kuiper_infer {}  // namespace kuiper_infer

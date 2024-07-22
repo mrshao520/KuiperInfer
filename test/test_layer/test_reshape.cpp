@@ -21,7 +21,7 @@
 
 // Created by fss on 22-12-21.
 #include <gtest/gtest.h>
-#include "data/tensor.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_reshape, reshape1) {
   using namespace kuiper_infer;

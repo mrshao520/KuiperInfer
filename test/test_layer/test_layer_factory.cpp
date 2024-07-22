@@ -22,7 +22,7 @@
 // Created by fss on 23-1-22.
 
 #include <gtest/gtest.h>
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 using namespace kuiper_infer;
 StatusCode TestCreateLayer(const std::shared_ptr<RuntimeOperator>& op,

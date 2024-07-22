@@ -22,8 +22,9 @@
 //
 // Created by fss on 23-10-11.
 //
-#include "deconvolution.hpp"
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/deconvolution.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+
 namespace kuiper_infer {
 
 void DeconvolutionLayer::set_weights(const std::vector<std::shared_ptr<Tensor<float>>>& weights) {

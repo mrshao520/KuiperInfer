@@ -21,9 +21,9 @@
 
 // Created by fss on 22-11-13.
 
-#include "linear.hpp"
+#include "kuiper/layer/details/linear.hpp"
 #include <glog/logging.h>
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 

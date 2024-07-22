@@ -1,39 +1,29 @@
+if(NOT BUILD_TEST)
+    return()
+endif()
+
 find_package(GTest REQUIRED)
-#find_package(OpenMP REQUIRED)
-find_package(glog REQUIRED)
-find_package(Armadillo REQUIRED)
-find_package(BLAS REQUIRED)
-find_package(LAPACK REQUIRED)
 
-aux_source_directory(../test/test_data DIR_TEST_DATA)
-aux_source_directory(../test/test_layer DIR_TEST_LAYER)
-aux_source_directory(../test/test_net DIR_TEST_NET)
-aux_source_directory(../test/test_runtime DIR_TEST_RUNTIME)
+file(GLOB_RECURSE test_srcs "${PROJECT_SOURCE_DIR}/test/*.cpp")
 
-set(link_lib glog::glog GTest::gtest)
-if (!WIN32)
-    set(link_lib "${link_lib} pthread")
-endif ()
-set(link_math_lib ${ARMADILLO_LIBRARIES} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+# -----| adding test target
+add_executable(kuiper_test ${test_srcs})
+target_link_libraries(kuiper_test ${KuiperInfer_LINK} GTest::gtest)
 
-add_executable(test_kuiper test_main.cpp ${DIR_TEST_DATA} ${DIR_TEST_LAYER} ${DIR_TEST_NET} ${DIR_TEST_RUNTIME})
+kuiper_infer_default_properties(kuiper_test)
 
-target_link_libraries(test_kuiper ${link_lib} ${link_math_lib})
-target_link_directories(test_kuiper PUBLIC ${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(test_kuiper kuiper)
+kuiper_infer_set_runtime_directory(kuiper_test "${PROJECT_BINARY_DIR}/test")
+                    
+install(TARGETS kuiper_test DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# -----| adding runtest  please install C++ TestMate to see more details
+add_test(NAME runtest COMMAND $<TARGET_FILE:kuiper_test>
+                      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})          
 
 if (MSVC)
-    add_custom_command(TARGET test_kuiper POST_BUILD
+    add_custom_command(TARGET kuiper_test POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "$<TARGET_FILE_DIR:kuiper>/kuiper.dll"
-            $<TARGET_FILE_DIR:test_kuiper>)
+            $<TARGET_FILE_DIR:kuiper_test>)
 endif ()
-
-target_include_directories(test_kuiper PUBLIC ${glog_INCLUDE_DIR})
-target_include_directories(test_kuiper PUBLIC ${GTest_INCLUDE_DIR})
-target_include_directories(test_kuiper PUBLIC ${Armadillo_INCLUDE_DIR})
-
-set_target_properties(test_kuiper PROPERTIES
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
 

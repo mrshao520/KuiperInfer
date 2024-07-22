@@ -1,29 +1,29 @@
-find_package(benchmark REQUIRED)
-aux_source_directory(../bench DIR_BENCH)
-
-set(link_lib benchmark::benchmark benchmark::benchmark_main)
-
-add_executable(bench_kuiper ${DIR_BENCH} )
-target_link_directories(bench_kuiper PUBLIC ${PROJECT_SOURCE_DIR}/lib)
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -fopenmp -march=native")
+if(NOT BUILD_BENCH)
+    return()
 endif()
 
-target_link_directories(bench_kuiper PUBLIC ${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(bench_kuiper ${link_lib} OpenMP::OpenMP_CXX)
-target_link_libraries(bench_kuiper kuiper)
+find_package(benchmark REQUIRED)
+
+file(GLOB_RECURSE bench_srcs "${PROJECT_SOURCE_DIR}/bench/*.cpp")
+
+# -----| adding bench target
+add_executable(bench_test ${bench_srcs})
+
+target_link_libraries(bench_test ${KuiperInfer_LINK} 
+                    benchmark::benchmark benchmark::benchmark_main) 
+
+kuiper_infer_default_properties(bench_test)
+kuiper_infer_set_runtime_directory(bench_test "${PROJECT_BINARY_DIR}/bench")
+
+# -----| install
+install(TARGETS bench_test DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 
 if (MSVC)
     # find kuiper dll
-    add_custom_command(TARGET bench_kuiper POST_BUILD
+    add_custom_command(TARGET bench_test POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "$<TARGET_FILE_DIR:kuiper>/kuiper.dll"
-            $<TARGET_FILE_DIR:bench_kuiper>)
+            $<TARGET_FILE_DIR:bench_test>)
 endif()
 
-target_include_directories(bench_kuiper PUBLIC ${benchmark_INCLUDE_DIRS})
-target_include_directories(bench_kuiper PUBLIC ${glog_INCLUDE_DIR})
-target_include_directories(bench_kuiper PUBLIC ${GTest_INCLUDE_DIR})
-target_include_directories(bench_kuiper PUBLIC ${Armadillo_INCLUDE_DIR})

@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 // Created by fss on 22-12-12.
-#include "hardsigmoid.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "simd.hpp"
+#include "kuiper/layer/details/hardsigmoid.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/simd.hpp"
 
 namespace kuiper_infer {
 using namespace activation;

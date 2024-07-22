@@ -23,10 +23,10 @@
 #include <algorithm>
 #include <cassert>
 #include <opencv2/opencv.hpp>
-#include "../source/layer/details/softmax.hpp"
-#include "data/tensor.hpp"
-#include "runtime/runtime_ir.hpp"
-#include "tick.hpp"
+#include "kuiper/layer/details/softmax.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
+#include "kuiper/tick.hpp"
 
 // python ref https://pytorch.org/hub/pytorch_vision_resnet/
 kuiper_infer::sftensor PreProcessImage(const cv::Mat& image) {

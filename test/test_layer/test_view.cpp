@@ -23,8 +23,8 @@
 
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/view.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/view.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, forward_view1) {
   using namespace kuiper_infer;

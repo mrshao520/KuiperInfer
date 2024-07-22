@@ -21,8 +21,8 @@
 
 // Created by fss on 22-11-17.
 
-#include "layer/abstract/layer_factory.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 namespace kuiper_infer {
 LayerRegisterer::CreateRegistry* LayerRegisterer::registry_ = nullptr;

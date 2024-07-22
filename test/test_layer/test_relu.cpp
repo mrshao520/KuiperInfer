@@ -23,9 +23,9 @@
 
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/relu.hpp"
-#include "../../source/layer/details/relu6.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/relu.hpp"
+#include "kuiper/layer/details/relu6.hpp"
+#include "kuiper/data/tensor.hpp"
 
 TEST(test_layer, forward_relu1) {
   using namespace kuiper_infer;

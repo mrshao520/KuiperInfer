@@ -21,10 +21,10 @@
 
 // Created by fss on 22-11-18.
 
-#include "expression.hpp"
+#include "kuiper/layer/details/expression.hpp"
 #include <stack>
-#include "data/tensor_util.hpp"
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 ExpressionLayer::ExpressionLayer(std::string statement)

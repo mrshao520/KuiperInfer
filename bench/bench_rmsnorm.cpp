@@ -5,8 +5,8 @@
 //
 // Created by fss on 24-2-15.
 //
-#include "../source/layer/details/rms_norm.hpp"
-#include "data/tensor.hpp"
+#include "kuiper/layer/details/rms_norm.hpp"
+#include "kuiper/data/tensor.hpp"
 
 static void BM_RMSNorm(benchmark::State& state) {
   using namespace kuiper_infer;

@@ -22,7 +22,7 @@
 //
 // Created by fss on 24-2-9.
 //
-#include "matmul.hpp"
+#include "kuiper/layer/details/matmul.hpp"
 namespace kuiper_infer {
 LLamaMatmulLayer::LLamaMatmulLayer(int32_t weight_dim0, int32_t weight_dim1)
     : ParamLayer("matmul"), weight_dim0_(weight_dim0), weight_dim1_(weight_dim1) {

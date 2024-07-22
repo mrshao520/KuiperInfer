@@ -21,7 +21,7 @@
 
 // Created by fss on 23-2-2.
 #include <benchmark/benchmark.h>
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 const static int kIterationNum = 5;
 
 static void BM_Yolov5nano_Batch4_320x320(benchmark::State& state) {

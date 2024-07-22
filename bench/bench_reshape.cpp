@@ -21,8 +21,8 @@
 
 // Created by fss on 2023/3/20.
 #include <benchmark/benchmark.h>
-#include "data/tensor.hpp"
-#include "data/tensor_util.hpp"
+#include "kuiper/data/tensor.hpp"
+#include "kuiper/data/tensor_util.hpp"
 
 static void BM_ReshapeRowMajor(benchmark::State& state) {
   using namespace kuiper_infer;

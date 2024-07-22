@@ -22,11 +22,12 @@
 //
 // Created by fss on 23-10-11.
 //
-#include "base_convolution.hpp"
-#include "convolution.hpp"
-#include "deconvolution.hpp"
-#include "layer/abstract/layer.hpp"
-#include "status_code.hpp"
+#include "kuiper/layer/details/base_convolution.hpp"
+#include "kuiper/layer/details/convolution.hpp"
+#include "kuiper/layer/details/deconvolution.hpp"
+#include "kuiper/layer/abstract/layer.hpp"
+#include "kuiper/status_code.hpp"
+
 namespace kuiper_infer {
 BaseConvolutionLayer::BaseConvolutionLayer(ConvType conv_type, uint32_t output_channel,
                                            uint32_t in_channel, uint32_t kernel_h,

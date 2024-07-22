@@ -1,0 +1,28 @@
+# KuiperInfer file for the KuiperInfer package
+#
+# After successful configuration the following variables
+# will be defined:
+#
+#   KuiperInfer_LIBRARIES    - IMPORTED targets to link against
+#                              (There is no KuiperInfer_INCLUDE_DIRS 
+#                               because they are speified in the IMPORTED target interface.)       
+#
+#   KuiperInfer_HAVE_CUDA    - signals about CUDA support
+#   KuiperInfer_HAVE_CUDNN   - signals about CUDNN support
+
+# Compute paths
+get_filename_component(KuiperInfer_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+# Our library dependencies
+if(NOT TARGET kuiper AND NOT kuiper_BINARY_DIR)
+    include("${KuiperInfer_CMAKE_DIR}/KuiperInferTargets.cmake")
+endif()
+
+# List of IMPORTED libs created by CaffeTargets.cmake
+# These targets already specify all needed definitions and include pathes
+set(KuiperInfer_LIBRARIES kuiper)
+
+# Cuda support variables
+set(KuiperInfer_CPU_ONLY @CPU_ONLY@)
+set(KuiperInfer_HAVE_CUDA @HAVE_CUDA@)
+set(KuiperInfer_HAVE_CUDNN @HAVE_CUDNN@)

@@ -21,7 +21,7 @@
 
 // Created by fss on 23-1-29.
 #include <gtest/gtest.h>
-#include "runtime/runtime_attr.hpp"
+#include "kuiper/runtime/runtime_attr.hpp"
 
 TEST(test_runtime, attr_weight_data1) {
   using namespace kuiper_infer;

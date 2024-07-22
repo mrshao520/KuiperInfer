@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 // Created by fss on 22-12-25.
-#include "upsample.hpp"
+#include "kuiper/layer/details/upsample.hpp"
 #include <cmath>
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 namespace kuiper_infer {
 
 static void CalcIndexAndLambda(int32_t input_size, int32_t output_size, float div_scale,

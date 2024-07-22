@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 // Created by fss on 22-11-21.
-#include "data/load_data.hpp"
+#include "kuiper/data/load_data.hpp"
 #include <glog/logging.h>
 #include <armadillo>
 #include <fstream>

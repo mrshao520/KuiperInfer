@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 // Created by fss on 22-11-17.
-#include "batchnorm2d.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/batchnorm2d.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 namespace kuiper_infer {
 
@@ -181,9 +181,9 @@ StatusCode BatchNorm2dLayer::CreateInstance(const std::shared_ptr<RuntimeOperato
 BatchNorm2dLayer::BatchNorm2dLayer(uint32_t num_features, float eps,
                                    std::vector<float> affine_weight, std::vector<float> affine_bias)
     : ParamLayer("Batchnorm"),
+      eps_(eps),
       affine_weight_(std::move(affine_weight)),
-      affine_bias_(std::move(affine_bias)),
-      eps_(eps) {
+      affine_bias_(std::move(affine_bias)) {
   this->InitWeightParam(num_features, 1, 1, 1);
   this->InitBiasParam(num_features, 1, 1, 1);
 }

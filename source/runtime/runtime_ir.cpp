@@ -19,15 +19,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 #include <deque>
 #include <iostream>
 #include <memory>
 #include <utility>
 #include <vector>
-#include "layer/abstract/layer_factory.hpp"
-#include "runtime/runtime_ir.hpp"
-#include "utils/time/time_logging.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
+#include "kuiper/utils/time/time_logging.hpp"
 
 namespace kuiper_infer {
 RuntimeGraph::RuntimeGraph(std::string param_path, std::string bin_path)

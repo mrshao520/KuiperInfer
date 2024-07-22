@@ -20,10 +20,10 @@
 // SOFTWARE.
 
 // Created by fss on 22-12-9.
-#include "flatten.hpp"
+#include "kuiper/layer/details/flatten.hpp"
 #include <numeric>
-#include "data/tensor_util.hpp"
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 FlattenLayer::FlattenLayer(int32_t start_dim, int32_t end_dim)

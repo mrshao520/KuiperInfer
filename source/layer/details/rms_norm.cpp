@@ -23,7 +23,8 @@
 // Created by fss on 24-2-9.
 //
 
-#include "rms_norm.hpp"
+#include "kuiper/layer/details/rms_norm.hpp"
+
 namespace kuiper_infer {
 RMSNormLayer::RMSNormLayer() : ParamLayer("rms_norm") { this->weights_.resize(1); }
 

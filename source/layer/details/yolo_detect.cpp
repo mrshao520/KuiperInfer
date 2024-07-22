@@ -20,10 +20,10 @@
 // SOFTWARE.
 
 // Created by fss on 22-12-26.
-#include "yolo_detect.hpp"
-#include "data/tensor_util.hpp"
-#include "layer/abstract/layer_factory.hpp"
-#include "simd.hpp"
+#include "kuiper/layer/details/yolo_detect.hpp"
+#include "kuiper/data/tensor_util.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/simd.hpp"
 
 namespace kuiper_infer {
 

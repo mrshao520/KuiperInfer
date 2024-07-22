@@ -21,7 +21,7 @@
 
 // Created by fss on 22-11-22.
 #include <benchmark/benchmark.h>
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 static void BM_MobilenetV3_Batch8_224x224(benchmark::State& state) {
   using namespace kuiper_infer;

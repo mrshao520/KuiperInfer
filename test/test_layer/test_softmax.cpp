@@ -23,9 +23,9 @@
 
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "../../source/layer/details/softmax.hpp"
-#include "data/load_data.hpp"
-#include "runtime/runtime_ir.hpp"
+#include "kuiper/layer/details/softmax.hpp"
+#include "kuiper/data/load_data.hpp"
+#include "kuiper/runtime/runtime_ir.hpp"
 
 TEST(test_layer, forward_softmax_dim1) {
   // softmax on dim = 1

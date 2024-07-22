@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 // Created by fss on 22-11-15.
-#include "layer/abstract/layer.hpp"
+#include "kuiper/layer/abstract/layer.hpp"
 namespace kuiper_infer {
 
 const std::vector<std::shared_ptr<Tensor<float>>>& Layer<float>::weights() const {

@@ -21,9 +21,9 @@
 
 // Created by fss on 23-4-27.
 
-#include "utils/time/time_logging.hpp"
+#include "kuiper/utils/time/time_logging.hpp"
 #include <utility>
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 namespace utils {

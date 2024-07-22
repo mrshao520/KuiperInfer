@@ -20,8 +20,8 @@
 // SOFTWARE.
 
 // Created by fss on 22-11-18.
-#include "relu.hpp"
-#include "layer/abstract/layer_factory.hpp"
+#include "kuiper/layer/details/relu.hpp"
+#include "kuiper/layer/abstract/layer_factory.hpp"
 
 namespace kuiper_infer {
 using namespace activation;

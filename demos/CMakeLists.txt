@@ -1,3 +1,8 @@
+if(NOT BUILD_DEMO)
+    return()
+endif()
+
+
 #add_subdirectory(resnet)
 #add_subdirectory(unet)
 add_subdirectory(yolo)

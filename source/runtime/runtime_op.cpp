@@ -20,8 +20,8 @@
 // SOFTWARE.
 
 // Created by fss on 23-2-27.
-#include "runtime/runtime_op.hpp"
-#include "data/tensor_util.hpp"
+#include "kuiper/runtime/runtime_op.hpp"
+#include "kuiper/data/tensor_util.hpp"
 
 namespace kuiper_infer {
 void RuntimeOperatorUtils<float>::InitOperatorInput(

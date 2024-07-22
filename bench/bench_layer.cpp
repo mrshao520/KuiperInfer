@@ -21,20 +21,20 @@
 
 // Created by fss on 23-4-27.
 #include <benchmark/benchmark.h>
-#include "../source/layer/details/adaptive_avgpooling.hpp"
-#include "../source/layer/details/cat.hpp"
-#include "../source/layer/details/expression.hpp"
-#include "../source/layer/details/flatten.hpp"
-#include "../source/layer/details/hardsigmoid.hpp"
-#include "../source/layer/details/hardswish.hpp"
-#include "../source/layer/details/linear.hpp"
-#include "../source/layer/details/maxpooling.hpp"
-#include "../source/layer/details/relu.hpp"
-#include "../source/layer/details/sigmoid.hpp"
-#include "../source/layer/details/silu.hpp"
-#include "../source/layer/details/softmax.hpp"
-#include "../source/layer/details/upsample.hpp"
-#include "../source/layer/details/view.hpp"
+#include "kuiper/layer/details/adaptive_avgpooling.hpp"
+#include "kuiper/layer/details/cat.hpp"
+#include "kuiper/layer/details/expression.hpp"
+#include "kuiper/layer/details/flatten.hpp"
+#include "kuiper/layer/details/hardsigmoid.hpp"
+#include "kuiper/layer/details/hardswish.hpp"
+#include "kuiper/layer/details/linear.hpp"
+#include "kuiper/layer/details/maxpooling.hpp"
+#include "kuiper/layer/details/relu.hpp"
+#include "kuiper/layer/details/sigmoid.hpp"
+#include "kuiper/layer/details/silu.hpp"
+#include "kuiper/layer/details/softmax.hpp"
+#include "kuiper/layer/details/upsample.hpp"
+#include "kuiper/layer/details/view.hpp"
 
 static void BM_Concat16to8(benchmark::State& state) {
   using namespace kuiper_infer;

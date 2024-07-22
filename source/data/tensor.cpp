@@ -21,7 +21,7 @@
 
 // Created by fss on 22-11-12.
 
-#include "data/tensor.hpp"
+#include "kuiper/data/tensor.hpp"
 namespace kuiper_infer {
 
 template <typename T>
