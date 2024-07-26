@@ -30,7 +30,6 @@
 namespace kuiper_infer {
 
 namespace activation {
-
 static void SigmoidSSE(sftensor input, sftensor output) {
   CHECK(input != nullptr && output != nullptr) << "The input or output tensor is empty.";
   CHECK(!input->empty() && !output->empty()) << "The input or output tensor is empty.";
@@ -78,37 +77,40 @@ static void ReluSSE(sftensor input, sftensor output) {
   CHECK(!input->empty() && !output->empty()) << "The input or output tensor is empty.";
   CHECK(input->size() == output->size()) << "The input and output sizes are not equal.";
   int64_t index;
-  int64_t packet_size;
-  int64_t size = static_cast<int64_t>(input->size());
-  const float* in_ptr = input->raw_ptr();
-  float* out_ptr = output->raw_ptr();
-#ifdef __AVX2__
-  packet_size = 8;
-  __m256 zero = _mm256_setzero_ps();
+  int64_t packet_size;                                 /// 定义包大小，用于 SIMD 操作
+  int64_t size = static_cast<int64_t>(input->size());  /// 获取输入张量大小
+  const float* in_ptr = input->raw_ptr();              /// 获取输入数据指针
+  float* out_ptr = output->raw_ptr();                  /// 获取输出数据指针
+#ifdef __AVX2__                                        /// 使用 AVX2 指令集进行处理
+  packet_size = 8;                                     /// 设置包大小为8个浮点数
+  __m256 zero = _mm256_setzero_ps();                   /// 创建一个全 0 的256位向量
+  /// 从输入指针加载256位数据
   for (index = 0; index <= size - packet_size; index += packet_size) {
-    __m256 p = _mm256_loadu_ps(in_ptr);
-    __m256 value = _mm256_max_ps(zero, p);
-    _mm256_storeu_ps(out_ptr, value);
-    in_ptr += packet_size;
-    out_ptr += packet_size;
+    __m256 p = _mm256_loadu_ps(in_ptr);     /// 从输入指针加载256位数据
+    __m256 value = _mm256_max_ps(zero, p);  /// 计算ReLU函数，即max(0, p)。
+    _mm256_storeu_ps(out_ptr, value);       /// 将结果保存到输出指针
+    in_ptr += packet_size;                  /// 更新输入指针
+    out_ptr += packet_size;                 /// 更新输出指针
   }
-#ifdef __SSE__
-  packet_size = 4;
-  __m128 zero128 = _mm_setzero_ps();
+#ifdef __SSE__                        /// 使用SSE指令集进行处理
+  packet_size = 4;                    /// 设置包大小为4个浮点数
+  __m128 zero128 = _mm_setzero_ps();  /// 创建一个全 0 的128位向量
+  /// 循环遍历每个128位的数据包
   for (; index <= size - packet_size; index += packet_size) {
-    __m128 p = _mm_loadu_ps(in_ptr);
-    __m128 value = _mm_max_ps(zero128, p);
-    _mm_storeu_ps(out_ptr, value);
-    in_ptr += packet_size;
-    out_ptr += packet_size;
+    __m128 p = _mm_loadu_ps(in_ptr);        /// 从输入指针加载128位数据
+    __m128 value = _mm_max_ps(zero128, p);  /// 计算Relu函数，即max(0, p)。
+    _mm_storeu_ps(out_ptr, value);          /// 将结果存储到输出指针
+    in_ptr += packet_size;                  /// 更新输入指针
+    out_ptr += packet_size;                 /// 更新输出指针
   }
 #endif
 #endif
   if (index < size) {
     while (index < size) {
-      float value = input->index(index);
-      output->index(index) = std::max(value, 0.f);
-      index += 1;
+      /// 循环处理剩余的每个元素
+      float value = input->index(index);            /// 获取输入张量的当前值
+      output->index(index) = std::max(value, 0.f);  /// 计算Relu函数
+      index += 1;                                   /// 更新索引
     }
   }
 }
