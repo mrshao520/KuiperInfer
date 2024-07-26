@@ -23,6 +23,8 @@
 #include <glog/logging.h>
 #include <gtest/gtest.h>
 #include "kuiper/layer/details/upsample.hpp"
+#include "kuiper/layer/details/upsample_bilinear.hpp"
+#include "kuiper/layer/details/upsample_nearest.hpp"
 #include "kuiper/data/load_data.hpp"
 #include "kuiper/runtime/runtime_ir.hpp"
 
