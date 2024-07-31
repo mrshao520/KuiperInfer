@@ -22,8 +22,8 @@
 // Created by fss on 22-12-26.
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include "kuiper/layer/details/cat.hpp"
 #include "kuiper/data/tensor.hpp"
+#include "kuiper/layer/details/cat.hpp"
 
 TEST(test_layer, cat1) {
   using namespace kuiper_infer;
@@ -112,7 +112,9 @@ TEST(test_layer, cat3) {
     std::shared_ptr<Tensor<float>> input = std::make_shared<Tensor<float>>(input_channels, 4, 4);
     input->Fill(float(i) + 1.f);
     inputs.push_back(input);
+    input->Show();
   }
+
   std::vector<std::shared_ptr<Tensor<float>>> outputs(output_size);
   CatLayer cat_layer(1);
   const auto status = cat_layer.Forward(inputs, outputs);
@@ -143,7 +145,7 @@ TEST(test_layer, cat4) {
     inputs.push_back(input);
   }
   std::vector<std::shared_ptr<Tensor<float>>> outputs(output_size);
-  CatLayer cat_layer(1);
+  CatLayer cat_layer(0);
   const auto status = cat_layer.Forward(inputs, outputs);
   ASSERT_EQ(status, StatusCode::kSuccess);
   for (uint32_t i = 0; i < outputs.size(); ++i) {
@@ -154,5 +156,254 @@ TEST(test_layer, cat4) {
     const arma::fmat& in_channel = inputs.at(i)->slice(0);
     const arma::fmat& out_channel = outputs.at(0)->slice(i);
     ASSERT_TRUE(arma::approx_equal(in_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+
+TEST(test_layer, cat_new_2_1) {
+  using namespace kuiper_infer;
+  arma::fmat f1 = "0, 1, 2;";
+  arma::fmat f2 = "3, 4;";
+  arma::fmat f3 = "0, 1, 2, 3, 4;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(3);
+  sftensor data2 = std::make_shared<Tensor<float>>(2);
+  sftensor result = std::make_shared<Tensor<float>>(5);
+  data1->slice(0) = f1;
+  data2->slice(0) = f2;
+  result->slice(0) = f3;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(1);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 1);
+  ASSERT_EQ(outputs.at(0)->rows(), 1);
+  ASSERT_EQ(outputs.at(0)->cols(), 5);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+
+TEST(test_layer, cat_new_3_1) {
+  using namespace kuiper_infer;
+  arma::fmat f1 =
+      "0, 1, 2;"
+      "4, 5, 6;";
+  arma::fmat f2 = "-1, -2, -3;";
+  arma::fmat f3 =
+      "0, 1, 2;"
+      "4, 5, 6;"
+      "-1, -2, -3;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(2, 3);
+  sftensor data2 = std::make_shared<Tensor<float>>(1, 3);
+  sftensor result = std::make_shared<Tensor<float>>(3, 3);
+  data1->slice(0) = f1;
+  data2->slice(0) = f2;
+  result->slice(0) = f3;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(1);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 1);
+  ASSERT_EQ(outputs.at(0)->rows(), 3);
+  ASSERT_EQ(outputs.at(0)->cols(), 3);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+TEST(test_layer, cat_new_3_2) {
+  using namespace kuiper_infer;
+  arma::fmat f1 =
+      "0, 1, 2;"
+      "4, 5, 6;";
+  arma::fmat f2 =
+      "-1, -2;"
+      "-3, -4";
+  arma::fmat f3 =
+      "0, 1, 2, -1, -2;"
+      "4, 5, 6, -3, -4;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(2, 3);
+  sftensor data2 = std::make_shared<Tensor<float>>(2, 2);
+  sftensor result = std::make_shared<Tensor<float>>(2, 5);
+  data1->slice(0) = f1;
+  data2->slice(0) = f2;
+  result->slice(0) = f3;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(2);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 1);
+  ASSERT_EQ(outputs.at(0)->rows(), 2);
+  ASSERT_EQ(outputs.at(0)->cols(), 5);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+
+TEST(test_layer, cat_new_4_1) {
+  using namespace kuiper_infer;
+  arma::fmat f1 =
+      "0, 1, 2;"
+      "4, 5, 6;";
+
+  arma::fmat f2 =
+      "-1, -2, -3;"
+      "-4, -5, -6;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(2, 2, 3);
+  sftensor data2 = std::make_shared<Tensor<float>>(1, 2, 3);
+  sftensor result = std::make_shared<Tensor<float>>(3, 2, 3);
+
+  data1->slice(0) = f1;
+  data1->slice(1) = f1;
+  data2->slice(0) = f2;
+
+  result->slice(0) = f1;
+  result->slice(1) = f1;
+  result->slice(2) = f2;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(1);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 3);
+  ASSERT_EQ(outputs.at(0)->rows(), 2);
+  ASSERT_EQ(outputs.at(0)->cols(), 3);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+
+TEST(test_layer, cat_new_4_2) {
+  using namespace kuiper_infer;
+  arma::fmat f1 =
+      "0, 1, 2;"
+      "4, 5, 6;"
+      "7, 8, 9;";
+  arma::fmat f2 =
+      "-1, -2, -3;"
+      "-4, -5, -6;";
+  arma::fmat f3 =
+      "0, 1, 2;"
+      "4, 5, 6;"
+      "7, 8, 9;"
+      "-1, -2, -3;"
+      "-4, -5, -6;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(2, 3, 3);
+  sftensor data2 = std::make_shared<Tensor<float>>(2, 2, 3);
+  sftensor result = std::make_shared<Tensor<float>>(2, 5, 3);
+
+  data1->slice(0) = f1;
+  data1->slice(1) = f1;
+  data2->slice(0) = f2;
+  data2->slice(1) = f2;
+
+  result->slice(0) = f3;
+  result->slice(1) = f3;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(2);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 2);
+  ASSERT_EQ(outputs.at(0)->rows(), 5);
+  ASSERT_EQ(outputs.at(0)->cols(), 3);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
+  }
+}
+
+TEST(test_layer, cat_new_4_3) {
+  using namespace kuiper_infer;
+  arma::fmat f1 =
+      "0, 1, 2;"
+      "4, 5, 6;";
+  arma::fmat f2 =
+      "-1, -2;"
+      "-4, -5;";
+  arma::fmat f3 =
+      "0, 1, 2, -1, -2;"
+      "4, 5, 6, -4, -5;";
+
+  sftensor data1 = std::make_shared<Tensor<float>>(2, 2, 3);
+  sftensor data2 = std::make_shared<Tensor<float>>(2, 2, 2);
+  sftensor result = std::make_shared<Tensor<float>>(2, 2, 5);
+
+  data1->slice(0) = f1;
+  data1->slice(1) = f1;
+  data2->slice(0) = f2;
+  data2->slice(1) = f2;
+
+  result->slice(0) = f3;
+  result->slice(1) = f3;
+
+  data1->Show();
+  data2->Show();
+
+  std::vector<sftensor> inputs;
+  inputs.push_back(data1);
+  inputs.push_back(data2);
+  std::vector<sftensor> outputs(1);
+  CatLayer cat_layer(3);
+  cat_layer.Forward(inputs, outputs);
+  ASSERT_EQ(outputs.at(0)->channels(), 2);
+  ASSERT_EQ(outputs.at(0)->rows(), 2);
+  ASSERT_EQ(outputs.at(0)->cols(), 5);
+  outputs.at(0)->Show();
+
+  for (uint32_t i = 0; i < outputs.at(0)->channels(); ++i) {
+    const arma::fmat& res_channel = result->slice(i);
+    const arma::fmat& out_channel = outputs.at(0)->slice(i);
+    ASSERT_TRUE(arma::approx_equal(res_channel, out_channel, "absdiff", 0.01f));
   }
 }

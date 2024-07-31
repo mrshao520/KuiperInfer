@@ -124,6 +124,14 @@ Tensor<T>::Tensor(const std::vector<uint32_t>& shapes) {
 }
 
 template <typename T>
+uint32_t Tensor<T>::dims() const {
+  CHECK(!this->raw_shapes_.empty());
+  CHECK_LE(this->raw_shapes_.size(), 3);
+  CHECK_GE(this->raw_shapes_.size(), 1);
+  return this->raw_shapes_.size();
+}
+
+template <typename T>
 uint32_t Tensor<T>::rows() const {
   CHECK(!this->data_.empty()) << "The data area of the tensor is empty.";
   return this->data_.n_rows;

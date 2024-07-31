@@ -78,6 +78,13 @@ class Tensor {
   explicit Tensor(const std::vector<uint32_t>& shapes);
 
   /**
+   * @brief Gets number of dims
+   * 
+   * @return Number of dims
+   */
+  uint32_t dims() const;
+
+  /**
    * @brief Gets number of rows
    *
    * @return Number of rows
