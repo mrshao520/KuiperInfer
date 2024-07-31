@@ -125,5 +125,5 @@ StatusCode LeakyRelu::CreateInstance(const std::shared_ptr<RuntimeOperator>& op,
   return StatusCode::kSuccess;
 }
 
-LayerRegistererWrapper kLeakyReluCreateInstance(LeakyRelu::CreateInstance, "nn.LeakyRelu");
+LayerRegistererWrapper kLeakyReluCreateInstance(LeakyRelu::CreateInstance, "nn.LeakyReLU");
 }  // namespace kuiper_infer
