@@ -15,7 +15,7 @@
 #ifndef PNNX_STOREZIP_H
 #define PNNX_STOREZIP_H
 
-#include <cstdint>
+#include <stdint.h>
 #include <map>
 #include <string>
 #include <vector>
@@ -29,7 +29,9 @@ class StoreZipReader {
 
   int open(const std::string& path);
 
-  size_t get_file_size(const std::string& name);
+  std::vector<std::string> get_names() const;
+
+  uint64_t get_file_size(const std::string& name) const;
 
   int read_file(const std::string& name, char* data);
 
@@ -39,8 +41,8 @@ class StoreZipReader {
   FILE* fp;
 
   struct StoreZipMeta {
-    size_t offset;
-    size_t size;
+    uint64_t offset;
+    uint64_t size;
   };
 
   std::map<std::string, StoreZipMeta> filemetas;
@@ -53,7 +55,7 @@ class StoreZipWriter {
 
   int open(const std::string& path);
 
-  int write_file(const std::string& name, const char* data, size_t size);
+  int write_file(const std::string& name, const char* data, uint64_t size);
 
   int close();
 
@@ -62,9 +64,9 @@ class StoreZipWriter {
 
   struct StoreZipMeta {
     std::string name;
-    size_t lfh_offset;
+    uint64_t lfh_offset;
     uint32_t crc32;
-    uint32_t size;
+    uint64_t size;
   };
 
   std::vector<StoreZipMeta> filemetas;
