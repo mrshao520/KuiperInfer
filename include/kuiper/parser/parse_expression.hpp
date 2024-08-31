@@ -38,6 +38,8 @@ enum class TokenType {
   TokenMul = -5,
   TokenLeftBracket = -4,
   TokenRightBracket = -3,
+  TokenComplex = -2,        ///< 复数
+  TokenImmediateData = -1,  ///< 立即数
 };
 
 /**

@@ -48,6 +48,11 @@ StatusCode ExpressionLayer::Forward(const std::vector<std::shared_ptr<Tensor<flo
     return StatusCode::kInferOutputsEmpty;
   }
 
+  // LOG(INFO) << "ExpressionLayer!!!";
+  // LOG(INFO) << "inputs size  : " << inputs.size();
+  // LOG(INFO) << "outputs size : " << outputs.size();
+  // LOG(INFO) << "statement    : " << statement_;
+
   CHECK(this->parser_ != nullptr) << "The parser in the expression layer is null!";
   this->parser_->Tokenizer(false);
   const auto& tokens = this->parser_->tokens();
@@ -65,15 +70,36 @@ StatusCode ExpressionLayer::Forward(const std::vector<std::shared_ptr<Tensor<flo
       str_number.erase(str_number.begin());
 
       int32_t input_branch = std::stoi(str_number);
+
       CHECK(input_branch >= 0) << "Input branch must be >= 0";
       uint32_t input_start_pos = input_branch * batch_size;
       std::vector<std::shared_ptr<Tensor<float>>> input_token_nodes;
+
+      // LOG(INFO) << "input branch :" << input_branch;
+
       for (uint32_t i = 0; i < batch_size; ++i) {
         CHECK(i + input_start_pos < inputs.size())
             << "The " << i << "th operand doesn't have appropriate number of tensors";
         input_token_nodes.push_back(inputs.at(i + input_start_pos));
       }
       op_stack.push(input_token_nodes);
+    } else if (current_token.token_type == TokenType::TokenImmediateData) {
+      std::string str_number = *(token_str_array.rbegin() + std::distance(tokens.rbegin(), iter));
+      float immediate_data = std::stof(str_number);
+
+      const auto& shape = inputs[0]->raw_shapes();
+      std::shared_ptr<Tensor<float>> immediate_tensor = std::make_shared<Tensor<float>>(shape);
+
+      // LOG(INFO) << "shapes : " << shape.at(0) << "x" << shape.at(1) << "x" << shape.at(2);
+
+      immediate_tensor->Fill(immediate_data);
+
+      std::vector<std::shared_ptr<Tensor<float>>> input_token_nodes;
+      for (uint32_t i = 0; i < batch_size; ++i) {
+        input_token_nodes.push_back(immediate_tensor);
+      }
+      op_stack.push(input_token_nodes);
+
     } else if (TokenIsOperator(current_token)) {
       // process operation
       CHECK(op_stack.size() >= 2) << "The number of operand is less than two";
@@ -91,6 +117,10 @@ StatusCode ExpressionLayer::Forward(const std::vector<std::shared_ptr<Tensor<flo
              "which need "
           << batch_size;
       op_stack.pop();
+
+      // LOG(INFO) << "type : " << int(current_token.token_type);
+      // LOG(INFO) << "node1: " << *(input_node1.at(0)->raw_ptr(0));
+      // LOG(INFO) << "node2: " << *(input_node2.at(0)->raw_ptr(0));
 
       std::vector<std::shared_ptr<Tensor<float>>> output_token_nodes(batch_size);
       if (current_token.token_type == TokenType::TokenAdd) {

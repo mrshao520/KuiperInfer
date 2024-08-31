@@ -21,8 +21,8 @@
 
 // Created by fss on 22-12-1.
 #include <gtest/gtest.h>
-#include "kuiper/layer/details/expression.hpp"
 #include "kuiper/data/load_data.hpp"
+#include "kuiper/layer/details/expression.hpp"
 #include "kuiper/parser/parse_expression.hpp"
 #include "kuiper/runtime/runtime_ir.hpp"
 
@@ -384,6 +384,121 @@ TEST(test_expression, complex6) {
   std::shared_ptr<Tensor<float>> output1 = outputs.front();
 
   ASSERT_TRUE(arma::approx_equal(output1->data(), output2->data(), "absdiff", 1e-5));
+}
+
+TEST(test_expression, immediate_data) {
+  using namespace kuiper_infer;
+  const std::string& str = "mul(mul(@0,2e-2), mul(1e-1,@1))";
+  ExpressionLayer layer(str);
+  std::shared_ptr<Tensor<float>> input0 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input0->Fill(2.f);
+
+  std::shared_ptr<Tensor<float>> input1 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input1->Fill(4.f);
+
+  std::vector<std::shared_ptr<Tensor<float>>> inputs;
+  inputs.push_back(input0);
+  inputs.push_back(input1);
+
+  std::vector<std::shared_ptr<Tensor<float>>> outputs(1);
+  outputs.at(0) = std::make_shared<Tensor<float>>(3, 224, 224);
+  const auto status = layer.Forward(inputs, outputs);
+  ASSERT_EQ(status, StatusCode::kSuccess);
+  ASSERT_EQ(outputs.size(), 1);
+  std::shared_ptr<Tensor<float>> output2 = std::make_shared<Tensor<float>>(3, 224, 224);
+  output2->Fill(0.016f);
+  std::shared_ptr<Tensor<float>> output1 = outputs.front();
+
+  ASSERT_TRUE(arma::approx_equal(output1->data(), output2->data(), "absdiff", 1e-5));
+}
+
+TEST(test_expression, immediate_data1) {
+  using namespace kuiper_infer;
+  const std::string& str = "mul(mul(@0,2e-2), add(1e-1,@1))";
+  ExpressionLayer layer(str);
+  std::shared_ptr<Tensor<float>> input0 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input0->Fill(2.f);
+
+  std::shared_ptr<Tensor<float>> input1 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input1->Fill(4.f);
+
+  std::vector<std::shared_ptr<Tensor<float>>> inputs;
+  inputs.push_back(input0);
+  inputs.push_back(input1);
+
+  std::vector<std::shared_ptr<Tensor<float>>> outputs(1);
+  outputs.at(0) = std::make_shared<Tensor<float>>(3, 224, 224);
+  const auto status = layer.Forward(inputs, outputs);
+  ASSERT_EQ(status, StatusCode::kSuccess);
+  ASSERT_EQ(outputs.size(), 1);
+  std::shared_ptr<Tensor<float>> output2 = std::make_shared<Tensor<float>>(3, 224, 224);
+  output2->Fill(0.164f);
+  std::shared_ptr<Tensor<float>> output1 = outputs.front();
+
+  ASSERT_TRUE(arma::approx_equal(output1->data(), output2->data(), "absdiff", 1e-5));
+}
+
+TEST(test_expression, immediate_data2) {
+  using namespace kuiper_infer;
+  const std::string& str = "add(mul(@0,2e-2), add(1e-1,@1))";
+  ExpressionLayer layer(str);
+  std::shared_ptr<Tensor<float>> input0 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input0->Fill(2.f);
+
+  std::shared_ptr<Tensor<float>> input1 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input1->Fill(4.f);
+
+  std::vector<std::shared_ptr<Tensor<float>>> inputs;
+  inputs.push_back(input0);
+  inputs.push_back(input1);
+
+  std::vector<std::shared_ptr<Tensor<float>>> outputs(1);
+  outputs.at(0) = std::make_shared<Tensor<float>>(3, 224, 224);
+  const auto status = layer.Forward(inputs, outputs);
+  ASSERT_EQ(status, StatusCode::kSuccess);
+  ASSERT_EQ(outputs.size(), 1);
+  std::shared_ptr<Tensor<float>> output2 = std::make_shared<Tensor<float>>(3, 224, 224);
+  output2->Fill(4.14f);
+  std::shared_ptr<Tensor<float>> output1 = outputs.front();
+
+  ASSERT_TRUE(arma::approx_equal(output1->data(), output2->data(), "absdiff", 1e-5));
+}
+
+TEST(test_expression, immediate_data3) {
+  using namespace kuiper_infer;
+  const std::string& str = "add(mul(add(mul(@0,1.000000e-01),@1),2.000000e-01),@2)";
+  ExpressionLayer layer(str);
+  std::shared_ptr<Tensor<float>> input0 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input0->Fill(0.f);
+  std::shared_ptr<Tensor<float>> input1 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input1->Fill(1.f);
+  std::shared_ptr<Tensor<float>> input2 = std::make_shared<Tensor<float>>(3, 224, 224);
+  input2->Fill(2.f);
+
+  std::vector<std::shared_ptr<Tensor<float>>> inputs;
+  inputs.push_back(input0);
+  inputs.push_back(input0);
+  inputs.push_back(input1);
+  inputs.push_back(input1);
+  inputs.push_back(input2);
+  inputs.push_back(input2);
+
+  std::vector<std::shared_ptr<Tensor<float>>> outputs(2);
+  outputs.at(0) = std::make_shared<Tensor<float>>(3, 224, 224);
+  outputs.at(1) = std::make_shared<Tensor<float>>(3, 224, 224);
+
+  const auto status = layer.Forward(inputs, outputs);
+  ASSERT_EQ(status, StatusCode::kSuccess);
+  ASSERT_EQ(outputs.size(), 2);
+  std::shared_ptr<Tensor<float>> output2 = std::make_shared<Tensor<float>>(3, 224, 224);
+  output2->Fill(2.2f);
+  std::shared_ptr<Tensor<float>> outputs_1 = outputs.at(0);
+  std::shared_ptr<Tensor<float>> outputs_2 = outputs.at(1);
+
+  outputs_1->Show();
+
+  ASSERT_TRUE(arma::approx_equal(outputs_1->data(), output2->data(), "absdiff", 1e-5));
+  ASSERT_TRUE(arma::approx_equal(outputs_2->data(), output2->data(), "absdiff", 1e-5));
 }
 
 TEST(test_parser, tokenizer) {

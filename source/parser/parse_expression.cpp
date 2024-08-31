@@ -51,6 +51,7 @@ void ExpressionParser::Tokenizer(bool retokenize) {
 
   for (int32_t i = 0; i < statement_.size();) {
     char c = statement_.at(i);
+    
     if (c == 'a') {
       CHECK(i + 1 < statement_.size() && statement_.at(i + 1) == 'd')
           << "Parse add token failed, illegal character: " << statement_.at(i + 1);
@@ -106,6 +107,25 @@ void ExpressionParser::Tokenizer(bool retokenize) {
           std::string(statement_.begin() + i, statement_.begin() + i + 1);
       token_strs_.push_back(token_right_bracket);
       i += 1;
+    } else if (std::isdigit(c)) {  ///< 立即数
+
+      CHECK(i + 1 < statement_.size())
+          << "Parse number token failed, illegal character: " << statement_.at(i + 1);
+      int32_t j = i + 1;
+      for (; j < statement_.size(); ++j) {
+        if (!std::isdigit(statement_.at(j)) && statement_.at(j) != '.' && statement_.at(j) != 'e' &&
+            statement_.at(j) != '-') {
+          break;
+        }
+      }
+      Token token(TokenType::TokenImmediateData, i, j);
+      CHECK(token.start_pos < token.end_pos);
+      tokens_.push_back(token);
+      std::string token_input_number = std::string(statement_.begin() + i, statement_.begin() + j);
+      token_strs_.push_back(token_input_number);
+      i = j;
+
+      LOG(INFO) << "input number: " << token_input_number;
     } else {
       LOG(FATAL) << "Unknown  illegal character: " << c;
     }
@@ -114,7 +134,9 @@ void ExpressionParser::Tokenizer(bool retokenize) {
 
 const std::vector<Token>& ExpressionParser::tokens() const { return this->tokens_; }
 
-const std::vector<std::string>& ExpressionParser::token_str_array() const { return this->token_strs_; }
+const std::vector<std::string>& ExpressionParser::token_str_array() const {
+  return this->token_strs_;
+}
 
 std::shared_ptr<TokenNode> ExpressionParser::Generate_(int32_t& index) {
   CHECK(index < this->tokens_.size());
@@ -129,7 +151,7 @@ std::shared_ptr<TokenNode> ExpressionParser::Generate_(int32_t& index) {
         << "Current token has a wrong length";
     const std::string& str_number =
         std::string(this->statement_.begin() + start_pos, this->statement_.begin() + end_pos);
-    return std::make_shared<TokenNode>(std::stoi(str_number), nullptr, nullptr);
+    return std::make_shared<TokenNode>(std::stof(str_number), nullptr, nullptr);
 
   } else if (current_token.token_type == TokenType::TokenMul ||
              current_token.token_type == TokenType::TokenAdd) {
@@ -184,7 +206,7 @@ std::vector<std::shared_ptr<TokenNode>> ExpressionParser::Generate() {
   std::shared_ptr<TokenNode> root = Generate_(index);
   CHECK(root != nullptr);
   CHECK(index == tokens_.size() - 1);
-  
+
   // 转逆波兰式,之后转移到expression中
   std::vector<std::shared_ptr<TokenNode>> reverse_polish;
   ReversePolish(root, reverse_polish);
