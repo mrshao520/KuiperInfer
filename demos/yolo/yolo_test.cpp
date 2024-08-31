@@ -159,7 +159,7 @@ void YoloDemo(const std::vector<std::string>& image_paths, const std::string& pa
                   cv::Point(detection.box.x, detection.box.y), font_face, font_scale,
                   cv::Scalar(255, 255, 0), 4);
     }
-    cv::imwrite(std::string("output") + std::to_string(i) + ".jpg", image);
+    cv::imwrite(std::string("output/") + std::string("output") + std::to_string(i) + ".jpg", image);
   }
 }
 
